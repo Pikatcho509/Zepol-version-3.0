@@ -57,12 +57,13 @@ body {
     font-family: 'Outfit', sans-serif;
     margin: 0;
     padding: 0;
-    /* Premium Aura Background - Warmer to avoid clinical white feel */
-    background-color: #f7f9fc;
+    /* PREMIUM AURORA BACKGROUND - No more white space */
+    background-color: #e0eafc;
     background-image:
-        radial-gradient(circle at 15% 15%, rgba(45, 90, 39, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(212, 163, 115, 0.08) 0%, transparent 40%),
-        linear-gradient(180deg, #fdfbf7 0%, #f4f6f8 100%);
+        radial-gradient(at 0% 0%, rgba(102, 166, 255, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(137, 247, 254, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(255, 255, 255, 0.1) 0px, transparent 50%),
+        linear-gradient(180deg, #eef2f3 0%, #e6e9f0 100%);
     background-attachment: fixed;
     color: var(--text-main);
     min-height: 100vh;
@@ -97,11 +98,10 @@ body {
     margin: 0 auto;
     overflow-x: hidden;
     position: relative;
-    background: rgba(255, 255, 255, 0.6);
-    /* Semi-transparent */
-    backdrop-filter: blur(20px);
-    /* Frosted glass effect */
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+    /* background: rgba(255, 255, 255, 0.6); REMOVED for Aurora visibility */
+    /* backdrop-filter: blur(20px); REMOVED */
+    background: transparent;
+    box-shadow: none;
 }
 
 /* Sidebar - Responsive Design */
@@ -1236,20 +1236,26 @@ body.auth-locked .chatbot-bubble {
 }
 
 /* Improved Cards (Glass) */
+/* Improved Cards (Deep Glass) */
 .glass-card {
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
-    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.85);
+    /* Much more opaque */
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    /* Deeper shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .glass-card:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 50px rgba(90, 100, 120, 0.12);
 }
 
 .card-icon {
@@ -4319,41 +4325,53 @@ body::after {
     color: var(--text-muted);
 }
 
-/* Specific Widget Styles */
+/* Specific Widget Styles - Rich & Filled */
 .breathe-widget {
-    background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
-    border-bottom: 4px solid #7dd3fc;
+    background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+    border-bottom: 4px solid #00acc1;
 }
 
 .breathe-widget .widget-icon {
-    color: #0ea5e9;
+    color: #00838f;
+    background: rgba(0, 172, 193, 0.1);
+    padding: 10px;
+    border-radius: 50%;
 }
 
 .gratitude-widget {
-    background: linear-gradient(135deg, #fefce8 0%, #ffffff 100%);
-    border-bottom: 4px solid #fde047;
+    background: linear-gradient(135deg, #fff9c4 0%, #ffffff 100%);
+    border-bottom: 4px solid #fbc02d;
 }
 
 .gratitude-widget .widget-icon {
-    color: #eab308;
+    color: #f9a825;
+    background: rgba(251, 192, 45, 0.1);
+    padding: 10px;
+    border-radius: 50%;
 }
 
 .journal-widget {
-    background: linear-gradient(135deg, #fce7f3 0%, #ffffff 100%);
-    border-bottom: 4px solid #f9a8d4;
+    background: linear-gradient(135deg, #f8bbd0 0%, #ffffff 100%);
+    border-bottom: 4px solid #ec407a;
 }
 
 .journal-widget .widget-icon {
-    color: #db2777;
+    color: #c2185b;
+    background: rgba(236, 64, 122, 0.1);
+    padding: 10px;
+    border-radius: 50%;
 }
 
 .community-widget {
-    background: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%);
-    border-bottom: 4px solid #86efac;
+    background: linear-gradient(135deg, #c8e6c9 0%, #ffffff 100%);
+    border-bottom: 4px solid #43a047;
 }
 
 .community-widget .widget-icon {
-    color: #22c55e;
+    color: #2e7d32;
+    background: rgba(67, 160, 71, 0.1);
+    padding: 10px;
+    border-radius: 50%;
 }
 
 /* Responsive adjustments */

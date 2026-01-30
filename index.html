@@ -427,547 +427,507 @@
             <!-- DASHBOARD VIEW -->
             <div id="view-dashboard" class="view hidden">
                 <div class="container">
-                    <div class="dashboard-header">
-                        <h2>Pwogrè Byennèt Ou</h2>
-                        <p>Ti pa ti pa, w ap avanse.</p>
+                    </p>
+                </div>
+                <div class="card safety-plan-card glass-card" onclick="openSafetyPlan()"
+                    style="cursor: pointer; border: 2px dashed var(--danger);">
+                    <div class="card-icon" style="color: rgba(230, 57, 70, 0.1);"><i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="dashboard-grid">
-                        <!-- Left Col: Stats -->
-                        <div class="card stat-card glass-card">
-                            <div class="card-icon"><i class="fas fa-heartbeat"></i></div>
-                            <h3>Nivo Byennèt</h3>
-                            <div class="score-display">
-                                <span id="wellbeing-score">--</span><span class="score-total">/10</span>
-                            </div>
-                            <p class="stat-note">Dènye tcheke: <span id="last-check-date">Jodi a</span></p>
-                        </div>
+                    <h3 style="color: var(--danger);">🛡️ Plan Sekirite</h3>
+                    <p>Klike la a si nivo tristès ou monte twòp.</p>
+                </div>
+            </div>
+    </div>
+    </div>
 
-                        <!-- Middle Col: Weekly Chart -->
-                        <div class="card chart-card glass-card" style="grid-column: span 2;">
-                            <h3>Evolisyon Imè (Semèn sa)</h3>
-                            <div id="mood-chart" class="simple-chart">
-                                <!-- Bars injected via JS -->
-                            </div>
-                        </div>
+    <!-- COMMUNITY VIEW -->
+    <div id="view-community" class="view hidden">
+        <div class="container">
+            <div class="view-header">
+                <h2>Kominote Zepòl</h2>
+                <p>Pataje ak ankouraje lòt moun nan yon espas san jijman.</p>
+                <div class="community-actions">
+                    <button id="join-comm-btn" class="btn-primary" onclick="openModal('join-community-modal')"><i
+                            class="fas fa-user-plus"></i>
+                        Rejwenn
+                        Kominote</button>
+                    <button class="btn-secondary" onclick="navigateTo('stories')"><i class="fas fa-star"></i>
+                        Vwa
+                        Viktwa</button>
+                </div>
+            </div>
 
-                        <!-- Right Col: Streak & Affirmation -->
-                        <div class="card streak-card glass-card">
-                            <div class="card-icon"><i class="fas fa-fire"></i></div>
-                            <h3>Seri Joudlan</h3>
-                            <div class="streak-count">3 Jou</div>
-                            <p>Bravo! Kontinye pran swen tèt ou.</p>
+            <div class="community-post-area card glass-panel" style="margin-bottom: 30px; padding: 20px;">
+                <h3>Pataje ak Kominote a</h3>
+                <textarea id="comm-post-input" placeholder="Ekri yon mesaj ankourajman oswa poze yon keksyon..."
+                    style="width: 100%; min-height: 80px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; padding: 10px;"></textarea>
+                <button class="btn-primary" onclick="window.submitCommunityPost()">Pataje nan
+                    Kominote</button>
+            </div>
+
+            <div class="community-alert-box">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Atansyon:</strong> Nenpòt kòmantè ki
+                gen
+                jijman oswa k ap moke moun pral lakòz yo retire ou nan kominote a.
+            </div>
+
+            <div id="community-feed-section">
+                <div class="feed-header"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Feed Kominote</h3>
+                    <div class="feed-filters">
+                        <select id="post-filter" class="lang-select" onchange="filterPosts(this.value)">
+                            <option value="all">Tout</option>
+                            <option value="pozitif">Pozitif 😊</option>
+                            <option value="bezwen-sipò">Bezwen Sipò 🙏</option>
+                            <option value="viktwa">Viktwa 🏆</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="posts-feed" class="posts-feed blurred">
+                    <!-- Posts injected here -->
+                    <div class="sg-message system"
+                        style="background: url('assets/community_bg.png'); background-size: cover; background-position: center; min-height: 150px; display: flex; align-items: flex-end; padding: 20px; border-radius: 12px; position: relative;">
+                        <p
+                            style="background: rgba(255,255,255,0.9); padding: 10px; border-radius: 8px; color: var(--primary-dark); font-weight: 600;">
+                            Byenveni nan espas pataj la! Isit la nou respekte youn lòt. 👇</p>
+                    </div>
+                </div>
+            </div>
+            <!-- SUPPORT GROUP VIEW (Chat) - Moved inside container -->
+            <div class="support-group-container">
+                <div class="sg-header">
+                    <h3>Gwoup Sipò Kominotè</h3>
+                    <p>Pale ak lòt moun ki konprann ou. Pa gen jijman.</p>
+                </div>
+                <div class="sg-chat-area" id="sg-chat-feed" style="position: relative;">
+                    <!-- Chat items -->
+                    <div id="chat-lock-overlay" class="hidden"
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10; flex-direction: column; text-align: center; padding: 20px;">
+                        <i class="fas fa-lock" style="font-size: 40px; color: var(--primary); margin-bottom: 10px;"></i>
+                        <p style="margin-bottom: 15px; font-weight: 500;">Ou dwe yon manm pou w ka
+                            patisipe
+                            nan konvèsasyon sa a.</p>
+                        <button class="btn-primary" onclick="openModal('join-community-modal')"
+                            style="margin-top: 10px;">Rejwenn Kominote</button>
+                    </div>
+                    <div class="sg-message system">
+                        <p>Byenveni nan gwoup la. Sonje respè se premye règ nou.</p>
+                    </div>
+                </div>
+                <div class="sg-input-area">
+                    <input type="text" placeholder="Di yon bagay ankourajan..." id="sg-input">
+                    <button class="btn-primary" onclick="window.submitGroupMessage()">Voye</button>
+                </div>
+                <div class="whatsapp-invite"
+                    style="padding: 15px; text-align: center; background: #e9f7ef; border-top: 1px solid #d4edda;">
+                    <p style="margin-bottom: 10px; font-size: 14px; color: #155724;">Rejwenn nou sou
+                        WhatsApp
+                        pou plis sipò!</p>
+                    <a href="https://chat.whatsapp.com/Ff7iC6KZlZdJHfQyNWf16l" class="btn-primary"
+                        style="background: #25d366; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+                        <i class="fab fa-whatsapp"></i> Gwoup WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS STORIES VIEW -->
+    <div id="view-stories" class="view hidden">
+        <div class="container">
+            <div class="view-header">
+                <h2>Vwa Viktwa 🌟</h2>
+                <p>Istwa moun ki te konbat depresyon epi ki geri. Pa gen anyen ki impossible.</p>
+                <button class="btn-primary" onclick="openStorySubmission()" style="margin-top:15px;">Pataje
+                    Istwa Pa w</button>
+            </div>
+            <div id="stories-grid" class="features-grid">
+                <!-- Success stories injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RESOURCES VIEW -->
+    <div id="view-resources" class="view hidden">
+        <div class="container">
+            <div class="view-header"
+                style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/resources_bg.png'); background-size: cover; background-position: center; color: white; padding: 60px 20px; border-radius: 24px; margin-bottom: 30px;">
+                <h2 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Bibliyotèk Resous
+                </h2>
+                <p style="color: #f0f0f0; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">Jwenn atik, videyo,
+                    ak
+                    egzèsis pou sipòte byennèt ou.</p>
+            </div>
+            <div class="resources-categories">
+                <button class="cat-btn active">Tout</button>
+                <button class="cat-btn">Atik</button>
+                <button class="cat-btn">Videyo</button>
+                <button class="cat-btn">Egzèsis</button>
+            </div>
+            <div class="resources-grid">
+                <!-- Cards injected here -->
+                <div class="card resource-card">
+                    <div class="res-img">
+                        <img src="assets/depression_support.jfif" alt="Konprann Depresyon"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="res-content">
+                        <h4>Konprann Depresyon</h4>
+                        <p>Yon gid konplè pou rekonèt siy yo epi chèche èd.</p>
+                        <div class="res-meta">
+                            <span><i class="far fa-clock"></i> 5 min li</span>
+                            <span><i class="fas fa-layer-group"></i> Debitan</span>
                         </div>
-                        <div class="card affirmation-card glass-card"
-                            style="background: var(--primary-gradient); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            <h3>💡 Panse Pozitif</h3>
-                            <p style="font-size:1.1em; font-style:italic;">"Ou gen fòs pou simonte nenpòt defi
-                                jodi
-                                a."
-                            </p>
+                        <button class="btn-secondary" onclick="openModal('depression-article-modal')">Li
+                            Atik
+                            la</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-exercise">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>5 Teknik Respirasyon</h4>
+                        <p>Kalme kò ou nan 5 minit ak teknik 4-7-8.</p>
+                        <div class="res-meta">
+                            <span><i class="far fa-clock"></i> 5 min</span>
+                            <span><i class="fas fa-spa"></i> Detant</span>
                         </div>
-                        <div class="card safety-plan-card glass-card" onclick="openSafetyPlan()"
-                            style="cursor: pointer; border: 2px dashed var(--danger);">
-                            <div class="card-icon" style="color: rgba(230, 57, 70, 0.1);"><i
-                                    class="fas fa-shield-alt"></i>
+                        <button class="btn-secondary"
+                            onclick="navigateTo('wellness'); window.switchWellnessMode('breathing')">Kòmanse</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img">
+                        <img src="assets/support_vibe.jfif" alt="Jere Estrès"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="res-content">
+                        <h4>Jere Estrès</h4>
+                        <p>Teknik pratik pou diminye estrès chak jou.</p>
+                        <div class="res-meta">
+                            <span><i class="far fa-clock"></i> 8 min li</span>
+                            <span><i class="fas fa-shield-alt"></i> Pratik</span>
+                        </div>
+                        <button class="btn-secondary" onclick="openModal('stress-article-modal')">Dekouvri</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-exercise">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>Medyitasyon Gide</h4>
+                        <p>Sesyon medyitasyon 10 minit pou kòmansan.</p>
+                        <div class="res-meta">
+                            <span><i class="far fa-clock"></i> 10 min</span>
+                            <span><i class="fas fa-leaf"></i> Kalm</span>
+                        </div>
+                        <button class="btn-secondary"
+                            onclick="navigateTo('wellness'); window.switchWellnessMode('breathing')">Kòmanse</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-app">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>Aplikasyon Byennèt</h4>
+                        <p>Top 5 aplikasyon pou sipòte byennèt mantal.</p>
+                        <div class="res-meta">
+                            <span><i class="fas fa-download"></i> iOS/Android</span>
+                            <span><i class="fas fa-star"></i> Top 5</span>
+                        </div>
+                        <button class="btn-secondary" onclick="openModal('depression-article-modal')">Gade
+                            Lis
+                            la</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-community">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>Gwoup Sipò</h4>
+                        <p>Konekte ak lòt moun ki gen eksperyans menm jan.</p>
+                        <div class="res-meta">
+                            <span><i class="fas fa-user-friends"></i> Live</span>
+                            <span><i class="fas fa-lock"></i> Prive</span>
+                        </div>
+                        <button class="btn-secondary" onclick="navigateTo('community')">Rejwenn</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-article">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>Liv Rekòmande</h4>
+                        <p>Liv ki ka ede w nan vwayaj geri ou.</p>
+                        <div class="res-meta">
+                            <span><i class="fas fa-book-reader"></i> Bibliyotèk</span>
+                            <span><i class="fas fa-check-circle"></i> Verifye</span>
+                        </div>
+                        <button class="btn-secondary" onclick="openModal('depression-article-modal')">Gade
+                            Lis
+                            la</button>
+                    </div>
+                </div>
+                <div class="card resource-card">
+                    <div class="res-img category-app">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="res-content">
+                        <h4>Jwèt Detant</h4>
+                        <p>Jwèt senp pou distrè lespri ou epi detann.</p>
+                        <div class="res-meta">
+                            <span><i class="fas fa-heartbeat"></i> Detant</span>
+                            <span><i class="fas fa-infinity"></i> San Limit</span>
+                        </div>
+                        <button class="btn-secondary" onclick="navigateTo('wellness')">Jwe Kounye
+                            a</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE VIEW (Previously Settings) -->
+    <div id="view-settings" class="view hidden">
+        <div class="container">
+            <div class="view-header">
+                <h2>Pwofil Mwen</h2>
+                <p>Jere enfòmasyon ou yo ak bouyon ou yo.</p>
+            </div>
+
+            <div class="settings-container">
+                <!-- Drafts Section -->
+                <div class="card setting-section glass-card">
+                    <h3>📝 Bouyon Pataj (Drafts)</h3>
+                    <p style="margin-bottom:15px; font-size:14px; color:var(--text-light);">Pataj ou te
+                        sove
+                        pou pita.</p>
+                    <div id="drafts-container">
+                        <!-- Drafts injected here -->
+                    </div>
+                </div>
+
+                <div class="card setting-section glass-card">
+                    <h3>⚙️ Anviwònman</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-language"></i>
+                            <div>
+                                <h4>Chanje Lang</h4>
+                                <p>Chwazi lang ou prefere</p>
                             </div>
-                            <h3 style="color: var(--danger);">🛡️ Plan Sekirite</h3>
-                            <p>Klike la a si nivo tristès ou monte twòp.</p>
+                        </div>
+                        <select class="lang-select" id="profile-lang-select" onchange="changeLanguage(this.value)">
+                            <option value="ht">Kreyòl</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card setting-section glass-card">
+                    <h3>💡 Sant Èd & Gid</h3>
+                    <div id="help-gallery" class="help-gallery">
+                        <!-- Help items injected by ui.js -->
+                    </div>
+                </div>
+
+                <div class="card setting-section glass-card">
+                    <h3>🛡️ Sekirite & Done</h3>
+                    <p style="margin-bottom:15px; font-size:14px; color:var(--text-light);">Download yon
+                        kopi done ou yo ak kontak ijans ou yo pou sekirite ou.</p>
+                    <button class="btn-primary" style="width:100%; margin-bottom: 10px;"
+                        onclick="window.exportUserData()">
+                        <i class="fas fa-file-download"></i> Ekspòte Done Sekirite Mwen
+                    </button>
+                </div>
+
+                <div class="card setting-section glass-card">
+                    <h3>🚩 Kont</h3>
+                    <button class="btn-danger" style="width:100%;" onclick="dataManager.logout()">
+                        <i class="fas fa-sign-out-alt"></i> Dekonekte Kont la
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WELLNESS VIEW -->
+    <div id="view-wellness" class="view hidden">
+        <div class="container">
+            <div class="view-header">
+                <h2>Byennèt & Detant</h2>
+                <p>Pran yon moman pou w de-stresse ak jwèt ak egzèsis sa yo.</p>
+            </div>
+            <div class="wellness-hub">
+                <div class="wellness-menu">
+                    <button class="wellness-btn active" onclick="switchWellnessMode('breathing')">🌬️
+                        Respirasyon</button>
+                    <button class="wellness-btn" onclick="switchWellnessMode('clouds')">☁️ Cloud
+                        Clearer</button>
+                    <button class="wellness-btn" onclick="switchWellnessMode('vibe')">✨ Vibe
+                        Catcher</button>
+                    <button class="wellness-btn" onclick="switchWellnessMode('gratitude')">🍯 Bokal
+                        Gratitid</button>
+                </div>
+
+                <!-- 1. Breathing -->
+                <div id="mode-breathing" class="wellness-mode">
+                    <div class="card exercise-card">
+                        <h3>Respirasyon Kalme (4-7-8)</h3>
+                        <div class="breathing-container">
+                            <div class="breathing-circle" id="breathing-circle">
+                                <span id="breath-instruction">Pare?</span>
+                            </div>
+                        </div>
+                        <button id="start-breath-btn" class="btn-primary">Kòmanse</button>
+                    </div>
+                </div>
+
+                <!-- 2. Cloud Clearer (New Game) -->
+                <div id="mode-clouds" class="wellness-mode hidden">
+                    <div class="game-container clouds-container glass-card">
+                        <h3>Nwaj Pozitif - Netwaye Syèl la</h3>
+                        <p>Glise dwèt ou sou nwaj nwa yo pou fè solèy la briye! ☀️</p>
+                        <div id="cloud-game-area" class="cloud-game-area">
+                            <div class="sun-behind">☀️</div>
+                            <div id="clouds-overlay"></div>
+                        </div>
+                        <button class="btn-secondary" onclick="initCloudGame()"
+                            style="margin-top: 10px;">Re-kòmanse</button>
+                    </div>
+                </div>
+
+                <!-- 3. Vibe Catcher -->
+                <div id="mode-vibe" class="wellness-mode hidden">
+                    <div class="game-container glass-card">
+                        <h3>Vibe Catcher - Atrape Onn Pozitif yo</h3>
+                        <p>Klike sou zetwal ak kè yo k ap tonbe yo! ✨❤️</p>
+                        <div id="vibe-game-area" class="vibe-game-area">
+                            <div id="vibe-score">Sko: 0</div>
+                        </div>
+                        <button class="btn-secondary" onclick="initVibeGame()" id="vibe-start-btn">Kòmanse
+                            Jwèt la</button>
+                    </div>
+                </div>
+
+                <!-- 4. Gratitude Jar -->
+                <div id="mode-gratitude" class="wellness-mode hidden">
+                    <div class="gratitude-container glass-card">
+                        <h3>🍯 Bokal Gratitid</h3>
+                        <p>Ekri yon bagay ou rekonesan pou li pou w ka plen bokal la.</p>
+                        <div class="jar-wrapper">
+                            <div id="gratitude-jar-body" class="jar-body">
+                                <div id="jar-empty-msg" class="jar-msg">Bokal la vid... Kòmanse pataje!
+                                </div>
+                                <div id="jar-fill-level" class="jar-fill"></div>
+                            </div>
+                        </div>
+                        <div class="jar-input">
+                            <input type="text" id="gratitude-text" placeholder="Mwen rekonesan pou...">
+                            <button class="btn-primary" onclick="addGratitudeNote()">Ajoute</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- COMMUNITY VIEW -->
-            <div id="view-community" class="view hidden">
-                <div class="container">
-                    <div class="view-header">
-                        <h2>Kominote Zepòl</h2>
-                        <p>Pataje ak ankouraje lòt moun nan yon espas san jijman.</p>
-                        <div class="community-actions">
-                            <button id="join-comm-btn" class="btn-primary"
-                                onclick="openModal('join-community-modal')"><i class="fas fa-user-plus"></i>
-                                Rejwenn
-                                Kominote</button>
-                            <button class="btn-secondary" onclick="navigateTo('stories')"><i class="fas fa-star"></i>
-                                Vwa
-                                Viktwa</button>
+    <!-- RESOURCES VIEW (Moved to bottom) -->
+
+    <!-- SHARE VIEW -->
+    <div id="view-share" class="view hidden">
+        <div class="container">
+            <div class="view-header">
+                <h2>Pataje Panse w</h2>
+                <p>Yon espas lib pou ou eksprime w san krent.</p>
+            </div>
+            <div class="share-container glass-panel">
+                <div class="share-form">
+                    <div class="form-group">
+                        <label>Kijan ou vle parèt?</label>
+                        <div class="identity-options">
+                            <div class="identity-option selected" onclick="selectIdentity('anon', this)">
+                                <i class="fas fa-user-secret"></i>
+                                <span>Anonim</span>
+                            </div>
+                            <div class="identity-option" onclick="selectIdentity('named', this)">
+                                <i class="fas fa-user"></i>
+                                <span>Mete Non Mwen</span>
+                            </div>
+                        </div>
+                        <input type="text" id="share-name-input" class="hidden" placeholder="Non ou...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kijan ou santi w?</label>
+                        <div class="mood-options">
+                            <div class="mood-opt" onclick="selectMood('happy', this)">😊<br>Kontan</div>
+                            <div class="mood-opt" onclick="selectMood('neutral', this)">😐<br>Nòmal
+                            </div>
+                            <div class="mood-opt" onclick="selectMood('sad', this)">😔<br>Tris</div>
+                            <div class="mood-opt" onclick="selectMood('anxious', this)">😰<br>Ankye
+                            </div>
+                            <div class="mood-opt" onclick="selectMood('tired', this)">😴<br>Fatige</div>
+                        </div>
+                        <input type="hidden" id="share-mood-input" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mesaj ou</label>
+                        <div style="position:relative;">
+                            <textarea id="share-text-input" placeholder="Eksplike sa k ap pase..."></textarea>
+                            <button type="button" id="emoji-btn"
+                                style="position:absolute; right:10px; top:10px; background:none; border:none; font-size:20px; cursor:pointer;">😊</button>
                         </div>
                     </div>
 
-                    <div class="community-post-area card glass-panel" style="margin-bottom: 30px; padding: 20px;">
-                        <h3>Pataje ak Kominote a</h3>
-                        <textarea id="comm-post-input" placeholder="Ekri yon mesaj ankourajman oswa poze yon keksyon..."
-                            style="width: 100%; min-height: 80px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; padding: 10px;"></textarea>
-                        <button class="btn-primary" onclick="window.submitCommunityPost()">Pataje nan
-                            Kominote</button>
+                    <div class="safety-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Nou pa jije isit la. Sa ou ekri an sekirite.</p>
                     </div>
 
-                    <div class="community-alert-box">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>Atansyon:</strong> Nenpòt kòmantè ki
-                        gen
-                        jijman oswa k ap moke moun pral lakòz yo retire ou nan kominote a.
-                    </div>
-
-                    <div id="community-feed-section">
-                        <div class="feed-header"
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <h3>Feed Kominote</h3>
-                            <div class="feed-filters">
-                                <select id="post-filter" class="lang-select" onchange="filterPosts(this.value)">
-                                    <option value="all">Tout</option>
-                                    <option value="pozitif">Pozitif 😊</option>
-                                    <option value="bezwen-sipò">Bezwen Sipò 🙏</option>
-                                    <option value="viktwa">Viktwa 🏆</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="posts-feed" class="posts-feed blurred">
-                            <!-- Posts injected here -->
-                            <div class="sg-message system"
-                                style="background: url('assets/community_bg.png'); background-size: cover; background-position: center; min-height: 150px; display: flex; align-items: flex-end; padding: 20px; border-radius: 12px; position: relative;">
-                                <p
-                                    style="background: rgba(255,255,255,0.9); padding: 10px; border-radius: 8px; color: var(--primary-dark); font-weight: 600;">
-                                    Byenveni nan espas pataj la! Isit la nou respekte youn lòt. 👇</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- SUPPORT GROUP VIEW (Chat) - Moved inside container -->
-                    <div class="support-group-container">
-                        <div class="sg-header">
-                            <h3>Gwoup Sipò Kominotè</h3>
-                            <p>Pale ak lòt moun ki konprann ou. Pa gen jijman.</p>
-                        </div>
-                        <div class="sg-chat-area" id="sg-chat-feed" style="position: relative;">
-                            <!-- Chat items -->
-                            <div id="chat-lock-overlay" class="hidden"
-                                style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10; flex-direction: column; text-align: center; padding: 20px;">
-                                <i class="fas fa-lock"
-                                    style="font-size: 40px; color: var(--primary); margin-bottom: 10px;"></i>
-                                <p style="margin-bottom: 15px; font-weight: 500;">Ou dwe yon manm pou w ka
-                                    patisipe
-                                    nan konvèsasyon sa a.</p>
-                                <button class="btn-primary" onclick="openModal('join-community-modal')"
-                                    style="margin-top: 10px;">Rejwenn Kominote</button>
-                            </div>
-                            <div class="sg-message system">
-                                <p>Byenveni nan gwoup la. Sonje respè se premye règ nou.</p>
-                            </div>
-                        </div>
-                        <div class="sg-input-area">
-                            <input type="text" placeholder="Di yon bagay ankourajan..." id="sg-input">
-                            <button class="btn-primary" onclick="window.submitGroupMessage()">Voye</button>
-                        </div>
-                        <div class="whatsapp-invite"
-                            style="padding: 15px; text-align: center; background: #e9f7ef; border-top: 1px solid #d4edda;">
-                            <p style="margin-bottom: 10px; font-size: 14px; color: #155724;">Rejwenn nou sou
-                                WhatsApp
-                                pou plis sipò!</p>
-                            <a href="https://chat.whatsapp.com/Ff7iC6KZlZdJHfQyNWf16l" class="btn-primary"
-                                style="background: #25d366; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
-                                <i class="fab fa-whatsapp"></i> Gwoup WhatsApp
-                            </a>
-                        </div>
+                    <div class="form-actions">
+                        <button class="btn-secondary" onclick="navigateTo('community')">Anile</button>
+                        <button class="btn-secondary" onclick="saveDraftFromShare()">Sove kòm
+                            Bouyon</button>
+                        <button class="btn-primary" onclick="submitSharePost()">Pataje</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- SUCCESS STORIES VIEW -->
-            <div id="view-stories" class="view hidden">
-                <div class="container">
-                    <div class="view-header">
-                        <h2>Vwa Viktwa 🌟</h2>
-                        <p>Istwa moun ki te konbat depresyon epi ki geri. Pa gen anyen ki impossible.</p>
-                        <button class="btn-primary" onclick="openStorySubmission()" style="margin-top:15px;">Pataje
-                            Istwa Pa w</button>
-                    </div>
-                    <div id="stories-grid" class="features-grid">
-                        <!-- Success stories injected here -->
-                    </div>
+    <!-- PUBLIC FEED VIEW (NEW) -->
+    <div id="view-public-feed" class="view hidden">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-badge" style="margin-bottom: 20px;">🕊️ Espas Pataj Lib</div>
+            <h2 style="margin-bottom: 10px;">Tout Pataj Kominote a</h2>
+            <p style="color: var(--primary-dark); margin-bottom: 30px; opacity: 0.8;">Isit la, tout moun
+                ka
+                pataje esperyans yo pou bay lòt moun fòs.</p>
+
+            <div id="public-feed-container" class="posts-feed">
+                <!-- Public posts will be injected here -->
+                <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                    <i class="fas fa-spinner fa-spin"></i> Chaje pataj yo...
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- RESOURCES VIEW -->
-            <div id="view-resources" class="view hidden">
-                <div class="container">
-                    <div class="view-header"
-                        style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/resources_bg.png'); background-size: cover; background-position: center; color: white; padding: 60px 20px; border-radius: 24px; margin-bottom: 30px;">
-                        <h2 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Bibliyotèk Resous
-                        </h2>
-                        <p style="color: #f0f0f0; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">Jwenn atik, videyo,
-                            ak
-                            egzèsis pou sipòte byennèt ou.</p>
-                    </div>
-                    <div class="resources-categories">
-                        <button class="cat-btn active">Tout</button>
-                        <button class="cat-btn">Atik</button>
-                        <button class="cat-btn">Videyo</button>
-                        <button class="cat-btn">Egzèsis</button>
-                    </div>
-                    <div class="resources-grid">
-                        <!-- Cards injected here -->
-                        <div class="card resource-card">
-                            <div class="res-img">
-                                <img src="assets/depression_support.jfif" alt="Konprann Depresyon"
-                                    style="width:100%; height:100%; object-fit:cover;">
-                            </div>
-                            <div class="res-content">
-                                <h4>Konprann Depresyon</h4>
-                                <p>Yon gid konplè pou rekonèt siy yo epi chèche èd.</p>
-                                <div class="res-meta">
-                                    <span><i class="far fa-clock"></i> 5 min li</span>
-                                    <span><i class="fas fa-layer-group"></i> Debitan</span>
-                                </div>
-                                <button class="btn-secondary" onclick="openModal('depression-article-modal')">Li
-                                    Atik
-                                    la</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-exercise">
-                                <i class="fas fa-wind"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>5 Teknik Respirasyon</h4>
-                                <p>Kalme kò ou nan 5 minit ak teknik 4-7-8.</p>
-                                <div class="res-meta">
-                                    <span><i class="far fa-clock"></i> 5 min</span>
-                                    <span><i class="fas fa-spa"></i> Detant</span>
-                                </div>
-                                <button class="btn-secondary"
-                                    onclick="navigateTo('wellness'); window.switchWellnessMode('breathing')">Kòmanse</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img">
-                                <img src="assets/support_vibe.jfif" alt="Jere Estrès"
-                                    style="width:100%; height:100%; object-fit:cover;">
-                            </div>
-                            <div class="res-content">
-                                <h4>Jere Estrès</h4>
-                                <p>Teknik pratik pou diminye estrès chak jou.</p>
-                                <div class="res-meta">
-                                    <span><i class="far fa-clock"></i> 8 min li</span>
-                                    <span><i class="fas fa-shield-alt"></i> Pratik</span>
-                                </div>
-                                <button class="btn-secondary"
-                                    onclick="openModal('stress-article-modal')">Dekouvri</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-exercise">
-                                <i class="fas fa-microchip"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>Medyitasyon Gide</h4>
-                                <p>Sesyon medyitasyon 10 minit pou kòmansan.</p>
-                                <div class="res-meta">
-                                    <span><i class="far fa-clock"></i> 10 min</span>
-                                    <span><i class="fas fa-leaf"></i> Kalm</span>
-                                </div>
-                                <button class="btn-secondary"
-                                    onclick="navigateTo('wellness'); window.switchWellnessMode('breathing')">Kòmanse</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-app">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>Aplikasyon Byennèt</h4>
-                                <p>Top 5 aplikasyon pou sipòte byennèt mantal.</p>
-                                <div class="res-meta">
-                                    <span><i class="fas fa-download"></i> iOS/Android</span>
-                                    <span><i class="fas fa-star"></i> Top 5</span>
-                                </div>
-                                <button class="btn-secondary" onclick="openModal('depression-article-modal')">Gade
-                                    Lis
-                                    la</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-community">
-                                <i class="fas fa-users-cog"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>Gwoup Sipò</h4>
-                                <p>Konekte ak lòt moun ki gen eksperyans menm jan.</p>
-                                <div class="res-meta">
-                                    <span><i class="fas fa-user-friends"></i> Live</span>
-                                    <span><i class="fas fa-lock"></i> Prive</span>
-                                </div>
-                                <button class="btn-secondary" onclick="navigateTo('community')">Rejwenn</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-article">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>Liv Rekòmande</h4>
-                                <p>Liv ki ka ede w nan vwayaj geri ou.</p>
-                                <div class="res-meta">
-                                    <span><i class="fas fa-book-reader"></i> Bibliyotèk</span>
-                                    <span><i class="fas fa-check-circle"></i> Verifye</span>
-                                </div>
-                                <button class="btn-secondary" onclick="openModal('depression-article-modal')">Gade
-                                    Lis
-                                    la</button>
-                            </div>
-                        </div>
-                        <div class="card resource-card">
-                            <div class="res-img category-app">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <div class="res-content">
-                                <h4>Jwèt Detant</h4>
-                                <p>Jwèt senp pou distrè lespri ou epi detann.</p>
-                                <div class="res-meta">
-                                    <span><i class="fas fa-heartbeat"></i> Detant</span>
-                                    <span><i class="fas fa-infinity"></i> San Limit</span>
-                                </div>
-                                <button class="btn-secondary" onclick="navigateTo('wellness')">Jwe Kounye
-                                    a</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROFILE VIEW (Previously Settings) -->
-            <div id="view-settings" class="view hidden">
-                <div class="container">
-                    <div class="view-header">
-                        <h2>Pwofil Mwen</h2>
-                        <p>Jere enfòmasyon ou yo ak bouyon ou yo.</p>
-                    </div>
-
-                    <div class="settings-container">
-                        <!-- Drafts Section -->
-                        <div class="card setting-section glass-card">
-                            <h3>📝 Bouyon Pataj (Drafts)</h3>
-                            <p style="margin-bottom:15px; font-size:14px; color:var(--text-light);">Pataj ou te
-                                sove
-                                pou pita.</p>
-                            <div id="drafts-container">
-                                <!-- Drafts injected here -->
-                            </div>
-                        </div>
-
-                        <div class="card setting-section glass-card">
-                            <h3>⚙️ Anviwònman</h3>
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <i class="fas fa-language"></i>
-                                    <div>
-                                        <h4>Chanje Lang</h4>
-                                        <p>Chwazi lang ou prefere</p>
-                                    </div>
-                                </div>
-                                <select class="lang-select" id="profile-lang-select"
-                                    onchange="changeLanguage(this.value)">
-                                    <option value="ht">Kreyòl</option>
-                                    <option value="en">English</option>
-                                    <option value="fr">Français</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="card setting-section glass-card">
-                            <h3>💡 Sant Èd & Gid</h3>
-                            <div id="help-gallery" class="help-gallery">
-                                <!-- Help items injected by ui.js -->
-                            </div>
-                        </div>
-
-                        <div class="card setting-section glass-card">
-                            <h3>🛡️ Sekirite & Done</h3>
-                            <p style="margin-bottom:15px; font-size:14px; color:var(--text-light);">Download yon
-                                kopi done ou yo ak kontak ijans ou yo pou sekirite ou.</p>
-                            <button class="btn-primary" style="width:100%; margin-bottom: 10px;"
-                                onclick="window.exportUserData()">
-                                <i class="fas fa-file-download"></i> Ekspòte Done Sekirite Mwen
-                            </button>
-                        </div>
-
-                        <div class="card setting-section glass-card">
-                            <h3>🚩 Kont</h3>
-                            <button class="btn-danger" style="width:100%;" onclick="dataManager.logout()">
-                                <i class="fas fa-sign-out-alt"></i> Dekonekte Kont la
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- WELLNESS VIEW -->
-            <div id="view-wellness" class="view hidden">
-                <div class="container">
-                    <div class="view-header">
-                        <h2>Byennèt & Detant</h2>
-                        <p>Pran yon moman pou w de-stresse ak jwèt ak egzèsis sa yo.</p>
-                    </div>
-                    <div class="wellness-hub">
-                        <div class="wellness-menu">
-                            <button class="wellness-btn active" onclick="switchWellnessMode('breathing')">🌬️
-                                Respirasyon</button>
-                            <button class="wellness-btn" onclick="switchWellnessMode('clouds')">☁️ Cloud
-                                Clearer</button>
-                            <button class="wellness-btn" onclick="switchWellnessMode('vibe')">✨ Vibe
-                                Catcher</button>
-                            <button class="wellness-btn" onclick="switchWellnessMode('gratitude')">🍯 Bokal
-                                Gratitid</button>
-                        </div>
-
-                        <!-- 1. Breathing -->
-                        <div id="mode-breathing" class="wellness-mode">
-                            <div class="card exercise-card">
-                                <h3>Respirasyon Kalme (4-7-8)</h3>
-                                <div class="breathing-container">
-                                    <div class="breathing-circle" id="breathing-circle">
-                                        <span id="breath-instruction">Pare?</span>
-                                    </div>
-                                </div>
-                                <button id="start-breath-btn" class="btn-primary">Kòmanse</button>
-                            </div>
-                        </div>
-
-                        <!-- 2. Cloud Clearer (New Game) -->
-                        <div id="mode-clouds" class="wellness-mode hidden">
-                            <div class="game-container clouds-container glass-card">
-                                <h3>Nwaj Pozitif - Netwaye Syèl la</h3>
-                                <p>Glise dwèt ou sou nwaj nwa yo pou fè solèy la briye! ☀️</p>
-                                <div id="cloud-game-area" class="cloud-game-area">
-                                    <div class="sun-behind">☀️</div>
-                                    <div id="clouds-overlay"></div>
-                                </div>
-                                <button class="btn-secondary" onclick="initCloudGame()"
-                                    style="margin-top: 10px;">Re-kòmanse</button>
-                            </div>
-                        </div>
-
-                        <!-- 3. Vibe Catcher -->
-                        <div id="mode-vibe" class="wellness-mode hidden">
-                            <div class="game-container glass-card">
-                                <h3>Vibe Catcher - Atrape Onn Pozitif yo</h3>
-                                <p>Klike sou zetwal ak kè yo k ap tonbe yo! ✨❤️</p>
-                                <div id="vibe-game-area" class="vibe-game-area">
-                                    <div id="vibe-score">Sko: 0</div>
-                                </div>
-                                <button class="btn-secondary" onclick="initVibeGame()" id="vibe-start-btn">Kòmanse
-                                    Jwèt la</button>
-                            </div>
-                        </div>
-
-                        <!-- 4. Gratitude Jar -->
-                        <div id="mode-gratitude" class="wellness-mode hidden">
-                            <div class="gratitude-container glass-card">
-                                <h3>🍯 Bokal Gratitid</h3>
-                                <p>Ekri yon bagay ou rekonesan pou li pou w ka plen bokal la.</p>
-                                <div class="jar-wrapper">
-                                    <div id="gratitude-jar-body" class="jar-body">
-                                        <div id="jar-empty-msg" class="jar-msg">Bokal la vid... Kòmanse pataje!
-                                        </div>
-                                        <div id="jar-fill-level" class="jar-fill"></div>
-                                    </div>
-                                </div>
-                                <div class="jar-input">
-                                    <input type="text" id="gratitude-text" placeholder="Mwen rekonesan pou...">
-                                    <button class="btn-primary" onclick="addGratitudeNote()">Ajoute</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RESOURCES VIEW (Moved to bottom) -->
-
-            <!-- SHARE VIEW -->
-            <div id="view-share" class="view hidden">
-                <div class="container">
-                    <div class="view-header">
-                        <h2>Pataje Panse w</h2>
-                        <p>Yon espas lib pou ou eksprime w san krent.</p>
-                    </div>
-                    <div class="share-container glass-panel">
-                        <div class="share-form">
-                            <div class="form-group">
-                                <label>Kijan ou vle parèt?</label>
-                                <div class="identity-options">
-                                    <div class="identity-option selected" onclick="selectIdentity('anon', this)">
-                                        <i class="fas fa-user-secret"></i>
-                                        <span>Anonim</span>
-                                    </div>
-                                    <div class="identity-option" onclick="selectIdentity('named', this)">
-                                        <i class="fas fa-user"></i>
-                                        <span>Mete Non Mwen</span>
-                                    </div>
-                                </div>
-                                <input type="text" id="share-name-input" class="hidden" placeholder="Non ou...">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Kijan ou santi w?</label>
-                                <div class="mood-options">
-                                    <div class="mood-opt" onclick="selectMood('happy', this)">😊<br>Kontan</div>
-                                    <div class="mood-opt" onclick="selectMood('neutral', this)">😐<br>Nòmal
-                                    </div>
-                                    <div class="mood-opt" onclick="selectMood('sad', this)">😔<br>Tris</div>
-                                    <div class="mood-opt" onclick="selectMood('anxious', this)">😰<br>Ankye
-                                    </div>
-                                    <div class="mood-opt" onclick="selectMood('tired', this)">😴<br>Fatige</div>
-                                </div>
-                                <input type="hidden" id="share-mood-input" value="">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Mesaj ou</label>
-                                <div style="position:relative;">
-                                    <textarea id="share-text-input" placeholder="Eksplike sa k ap pase..."></textarea>
-                                    <button type="button" id="emoji-btn"
-                                        style="position:absolute; right:10px; top:10px; background:none; border:none; font-size:20px; cursor:pointer;">😊</button>
-                                </div>
-                            </div>
-
-                            <div class="safety-note">
-                                <i class="fas fa-shield-alt"></i>
-                                <p>Nou pa jije isit la. Sa ou ekri an sekirite.</p>
-                            </div>
-
-                            <div class="form-actions">
-                                <button class="btn-secondary" onclick="navigateTo('community')">Anile</button>
-                                <button class="btn-secondary" onclick="saveDraftFromShare()">Sove kòm
-                                    Bouyon</button>
-                                <button class="btn-primary" onclick="submitSharePost()">Pataje</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PUBLIC FEED VIEW (NEW) -->
-            <div id="view-public-feed" class="view hidden">
-                <div class="container" style="max-width: 800px;">
-                    <div class="section-badge" style="margin-bottom: 20px;">🕊️ Espas Pataj Lib</div>
-                    <h2 style="margin-bottom: 10px;">Tout Pataj Kominote a</h2>
-                    <p style="color: var(--primary-dark); margin-bottom: 30px; opacity: 0.8;">Isit la, tout moun
-                        ka
-                        pataje esperyans yo pou bay lòt moun fòs.</p>
-
-                    <div id="public-feed-container" class="posts-feed">
-                        <!-- Public posts will be injected here -->
-                        <div style="text-align:center; padding:40px; color:var(--text-muted);">
-                            <i class="fas fa-spinner fa-spin"></i> Chaje pataj yo...
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RESOURCES VIEW -->
+    <!-- RESOURCES VIEW -->
 
 
 
-            <!-- END RESOURCES VIEW -->
+    <!-- END RESOURCES VIEW -->
     </div> <!-- End views-container -->
 
     <!-- PROFESSIONAL FOOTER -->
