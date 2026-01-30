@@ -1,0 +1,155 @@
+/* --- V4.0 NEW STYLES --- */
+.filter-chip {
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.filter-chip.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(45, 90, 39, 0.2);
+}
+
+.inbox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.msg-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.msg-avatar {
+    width: 35px;
+    height: 35px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.msg-content-mini {
+    flex: 1;
+    overflow: hidden;
+}
+
+.msg-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.msg-sender {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.msg-time {
+    font-size: 10px;
+    color: #a0aec0;
+}
+
+.msg-text-preview {
+    font-size: 13px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notif-item {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.notif-item:hover {
+    background: #f8fafc;
+}
+
+.notif-item.unread {
+    background: #f0fff4;
+    border-left: 3px solid var(--primary);
+}
+
+.badge-count {
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+
+/* Dashboard Toggle Animation */
+#dashboard-collapse {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Optimizations for Header */
+@media (max-width: 768px) {
+    .header-actions {
+        display: flex !important;
+        gap: 10px !important;
+        align-items: center;
+        z-index: 1001;
+    }
+
+    .quote-ticker {
+        display: none !important;
+        /* Force hide to give space */
+    }
+
+    .btn-msg-inbox span:not(.badge-count) {
+        display: none;
+    }
+
+    .btn-msg-inbox {
+        padding: 8px 12px !important;
+        background: var(--primary-light) !important;
+    }
+
+    #notification-bell {
+        font-size: 24px !important;
+        margin: 0 5px !important;
+    }
+
+    .motivation-banner {
+        display: none !important;
+    }
+}

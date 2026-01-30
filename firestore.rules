@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- HELPER FUNCTIONS ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // --- USERS COLLECTION ---
+    match /users/{userId} {
+      allow read: if isSignedIn(); // Allow reading profiles (for names/avatars)
+      allow write: if isOwner(userId); // Users manage their own profile
+      
+      // Sub-collections (notifications, inbox)
+      match /notifications/{notificationId} {
+        allow read, update, delete: if isOwner(userId);
+        allow create: if isSignedIn(); // Allow others to send notifications
+      }
+      match /inbox/{messageId} {
+        allow read, update, delete: if isOwner(userId);
+        allow create: if isSignedIn(); // Allow others to send DMs
+      }
+      match /moods/{moodId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // --- PUBLIC CONTENT ---
+    
+    // Community Posts
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      // Allow updates for Likes/Comments (simplified for functionality)
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && isOwner(resource.data.userId);
+    }
+    
+    // Success Stories (Vwa Viktwa)
+    match /success_stories/{storyId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+    }
+    
+    // Support Chat (Global)
+    match /support_chat/{messageId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+    }
+
+    // --- WELLNESS DATA ---
+    // Gratitude Jar
+    match /gratitude/{noteId} {
+      allow read, write: if isSignedIn() && isOwner(resource.data.userId);
+    }
+    
+    // Mood Logs
+    match /users/{userId}/moods/{moodId} {
+      allow read, write: if isSignedIn() && isOwner(userId);
+    }
+
+    // Default deny all others
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
